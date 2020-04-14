@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>连通图(定义和连通分量)</title>
+    <url>/2020/04/15/%E8%BF%9E%E9%80%9A%E5%9B%BE-%E5%AE%9A%E4%B9%89%E5%92%8C%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/</url>
+    <content><![CDATA[<blockquote>
+<p>参考文献：《大话数据结构》</p>
+</blockquote>
+<h2 id="1-连通图定义"><a href="#1-连通图定义" class="headerlink" title="1. 连通图定义"></a>1. 连通图定义</h2><p>首先，我们先了解什么叫连通:<br>    在无向图中，如果从顶点v1到顶点v2之间有路径(不一定直接连接，可以有中间路径)，则称v1和v2之间是连通的。</p>
+<pre class="mermaid">graph LR;
+ V1((V1))---V2((V2));</pre>
+
+<pre class="mermaid">graph LR;
+    V1((V1))---V3((V3))
+    V3((v3))---V2((V2))</pre>
+
+<pre><code>以上两种，我们都可以说V1和V2是连通的</code></pre><hr>
+<p>所以，什么是连通图？</p>
+<pre><code>在一个无向图中，任取两个顶点，它们之间都存在路径，即它们都是连通的，那么我们    称这种无向图叫做连通图。如下图所示，即一个连通图</code></pre><pre class="mermaid">graph LR;
+    A((A))---B((B))
+    B((B))---C((C))
+    C((C))---A</pre>
+
+<pre><code>非连通图如下图所示：</code></pre><pre class="mermaid">graph LR;
+    A((A))---B((B))
+    B((B))---C((C))
+    C((C))---A((A))
+    D((D))---F((F))</pre>
+
+<pre><code>由于D、F与上面A、B、C没有连通，所以该图为非连通图</code></pre><hr>
+<h2 id="2-连通分量"><a href="#2-连通分量" class="headerlink" title="2. 连通分量"></a>2. 连通分量</h2><blockquote>
+<p>《大话数据结构》中对于连通分量的定义如下：</p>
+<ol>
+<li>要是子图</li>
+<li>子图要是连通的</li>
+<li>连通子图含有极大顶点数</li>
+<li>具有极大顶点数的连通子图包含依附于这些顶点的所有边</li>
+</ol>
+</blockquote>
+<pre><code>在这个地方，有个很困扰我的东西，那就是什么是极大顶点数和极大连通子图。比如在上面我给出的非连通图中，D、F所构成的图就是极大连通子图。该子图就被称为连通分量。
+个人理解：极大的概念是相对的。==对于一个极大连通子图来说，如果我们将任何一个不在该子图中的顶点加入到这个子图中，就会导致这个子图图不再连通==</code></pre><hr>
+<pre><code>对于D、F构成的子图来说，极大顶点数是2，而D、F子图包含了有关这两个点的所有边，所以D、F子图是一个极大连通子图。如果是下面这样</code></pre><pre class="mermaid">graph LR;
+    A((A))---B((B))</pre>
+<p>虽然它满足了子图和连通的要求，但是不符合第三点和第四点。如果此时我们将C顶点加入到该子图中</p>
+<pre class="mermaid">graph LR;
+    A((A))---B((B))
+    B((B))---C((C))
+    C((C))---A((A))</pre>
+
+
+
+<p>我们会发现，它还能满足连通的条件，此外，即使我们没有把C顶点加入到该子图中，我们会发现，对A和B来说，都还有一条边没有加入到该子图中(A-C与B-C)，所以该子图就不满足上面所述的定义。</p>
+<h2 id="3-强连通图和强连通分量"><a href="#3-强连通图和强连通分量" class="headerlink" title="3. 强连通图和强连通分量"></a>3. 强连通图和强连通分量</h2><pre><code>### 强连通图</code></pre><blockquote>
+<p>引自《大话数据结构》：</p>
+</blockquote>
+<blockquote>
+<p>在有向图G中，如果对于每一对vi,vj∈V、vi≠vj，从vi到vj和vj到vi都路径的存在，称G为强连通图</p>
+</blockquote>
+<pre class="mermaid">graph LR;
+    A((A))-->B((B))
+    B((B))-->C((C))
+    C((C))-->A((A))</pre>
+
+<h3 id="强连通分量"><a href="#强连通分量" class="headerlink" title="强连通分量"></a>强连通分量</h3><blockquote>
+<p>引自《大话数据结构》：</p>
+<p>有向图中的极大强连通子图称为强连通分量</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>大话数据结构</category>
+      </categories>
+      <tags>
+        <tag>图</tag>
+      </tags>
+  </entry>
+</search>
