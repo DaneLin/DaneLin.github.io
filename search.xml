@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>1394.找出数组中的幸运数</title>
+    <url>/1394-%E6%89%BE%E5%87%BA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E5%B9%B8%E8%BF%90%E6%95%B0.html</url>
+    <content><![CDATA[<h1 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h1><p>在整数数组中，如果一个整数的出现频次和它的数值大小相等，我们就称这个整数为「幸运数」。</p>
+<p>给你一个整数数组 arr，请你从中找出并返回一个幸运数。</p>
+<p>如果数组中存在多个幸运数，只需返回 最大 的那个。<br>如果数组中不含幸运数，则返回 -1 。</p>
+<p>示例 1：</p>
+<p>输入：arr = [2,2,3,4]<br>输出：2<br>解释：数组中唯一的幸运数是 2 ，因为数值 2 的出现频次也是 2 。<br>示例 2：</p>
+<p>输入：arr = [1,2,2,3,3,3]<br>输出：3<br>解释：1、2 以及 3 都是幸运数，只需要返回其中最大的 3 。</p>
+<p>提示：</p>
+<p>1 &lt;= arr.length &lt;= 500</p>
+<p>1 &lt;= arr[i] &lt;= 500</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/find-lucky-integer-in-an-array" target="_blank" rel="noopener">https://leetcode-cn.com/problems/find-lucky-integer-in-an-array</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h2><p>  最容易想到的办法就是将我们数组中每个数组出现的次数都记录下来，然后和其本身进行对比，如果满足幸运数的条件，就更新幸运数的大小，如果找到更大的，就更新幸运数.</p>
+<p>  在这个地方，为了避免数据的重复计算，减少运行次数，使用一个check数组来标记这个数字是否已经计算过。</p>
+<p>  代码如下：<br>  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLucky</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> luckyNum=<span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> check[<span class="number">501</span>]=&#123;<span class="number">0</span>&#125;;<span class="comment">/*用来标记当前数值是否计算过*/</span></span><br><span class="line">        <span class="keyword">int</span> <span class="built_in">size</span>=arr.<span class="built_in">size</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">size</span>;i++)</span><br><span class="line">        &#123;<span class="comment">/*外层遍历数组中的每一个数值*/</span></span><br><span class="line">            <span class="keyword">int</span> times=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(!check[i])<span class="comment">/*如果数值还没有被计算过*/</span></span><br><span class="line">            &#123;</span><br><span class="line">            	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="built_in">size</span>;j++)</span><br><span class="line">            	&#123;</span><br><span class="line">                	<span class="keyword">if</span>(check[j])<span class="comment">/*如果数值已经计算过，直接开始下一次循环*/</span></span><br><span class="line">                	    <span class="keyword">continue</span>;</span><br><span class="line">               	<span class="keyword">if</span>(arr[j]==arr[i])</span><br><span class="line">               	&#123;</span><br><span class="line">                      times++;</span><br><span class="line">                      check[j]=<span class="literal">true</span>;</span><br><span class="line">                	&#125;</span><br><span class="line">            	&#125;	</span><br><span class="line">			&#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(times==arr[i]&amp;&amp;arr[i]&gt;luckyNum)</span><br><span class="line">            &#123;</span><br><span class="line">                luckyNum=arr[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> luckyNum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>在最坏的情况下，也就是数组中的每一个数值都不相同，那么两层for循环都要遍历一次数组，因此该算法的时间复杂度为O(n^2),空间复杂度为O(n);</p>
+<h2 id="解法二-参考leetcode提示：计算词频"><a href="#解法二-参考leetcode提示：计算词频" class="headerlink" title="解法二(参考leetcode提示：计算词频)"></a>解法二(参考leetcode提示：计算词频)</h2><p>在解法一中，我们是对数组中的每一个数值都进行了遍历，然后分别去计算它们出现的次数，最后再和它们自身数值的大小进行比较。那么在这个过程中，每一次遍历都只是在寻找和它大小相同的数值，所以，我们不妨用一个数组来存储他们出现的次数，用数组下标来表示他们数值的大小。</p>
+<p>在这个过程中，我们只需要开辟一个足够大的空间（根据提示，数组大小不会超过500),用来存储对应数值的出现的次数即可，之后我们访问存储了次数的数组，找到次数和下标相同的位置即可</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLucky</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/*501是因为数组下标从0开始，但是我们的数组最小数值从1开始，到500结束*/</span></span><br><span class="line">       <span class="keyword">int</span> <span class="built_in">map</span>[<span class="number">501</span>]=&#123;<span class="number">0</span>&#125;;<span class="comment">/*用来存储次数的数组*/</span></span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;arr.<span class="built_in">size</span>();i++)</span><br><span class="line">       &#123;</span><br><span class="line">			<span class="built_in">map</span>[arr[i]]++;<span class="comment">/*数值的大小就是下标*/</span></span><br><span class="line"></span><br><span class="line">	   &#125;</span><br><span class="line">	   <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">500</span>;i&gt;<span class="number">0</span>;i--)</span><br><span class="line">	   &#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">map</span>[i]==i)<span class="comment">/*从后向前遍历，如果找到了，就一定是最大的*/</span></span><br><span class="line">				<span class="keyword">return</span> i;</span><br><span class="line">	   &#125;</span><br><span class="line">	   <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>考虑最坏情况下，数值都是不一样的，计算数值出现次数只用了一层循环，因此该解法的时间复杂度为O(n),空间复杂度为O(n)。</p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>283 移动零</title>
+    <url>/283-%E7%A7%BB%E5%8A%A8%E9%9B%B6.html</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>​    给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
+<p>示例:</p>
+<p>输入: [0,1,0,3,12]<br>输出: [1,3,12,0,0]<br>说明:</p>
+<p>1、必须在原数组上操作，不能拷贝额外的数组。<br>2、尽量减少操作次数。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/move-zeroes" target="_blank" rel="noopener">https://leetcode-cn.com/problems/move-zeroes</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="解法一："><a href="#解法一：" class="headerlink" title="解法一："></a>解法一：</h2><p>这是我最开始想到的一种解法。</p>
+<p>​现在来看输入和输出，题目要求我们是将所有的零移动到后面，将所有的不为零的数字保持相对顺序的情况下将原本0的位置覆盖。所以，我们开始的时候，先去找不为零的数字，将它放到数组的前面去。具体操作过程如下</p>
+<p>之后，我们从下标2开始去找非零数字(之前找到的下标为1，并且已经设置为零)，然后重复上述操作。</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos=<span class="number">0</span>;<span class="comment">/*pos用来标记找到的非零数字下标*/</span></span><br><span class="line">        <span class="keyword">int</span> j=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)<span class="comment">/*外层i循环是用来确定数字放置的位置*/</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(j=pos;j&lt;nums.<span class="built_in">size</span>();j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[j]!=<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                	<span class="keyword">int</span> temp=nums[j];</span><br><span class="line">					nums[j]=<span class="number">0</span>;</span><br><span class="line">                    nums[i]=temp;</span><br><span class="line">                    </span><br><span class="line">                    pos=j+<span class="number">1</span>;<span class="comment">/*将查找位置向下移动*/</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(j&gt;nums.<span class="built_in">size</span>()<span class="number">-1</span>)<span class="comment">/*如果我们查找的位置大于数组长度，说明已经结束*/</span></span><br><span class="line">            	<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>该算法在leetcode上运行结果如下：</p>
+<p>​    <img src="/image-20200418130041294.png" alt="image-20200418130041294"></p>
+<h2 id="解法二："><a href="#解法二：" class="headerlink" title="解法二："></a>解法二：</h2><p>​    在解法一中，我们是一个位置一个位置去填充，那么我们能不能知道每个数字具体要移动的长度呢？这样我们就可以直接进行移动。观察给出的示例</p>
+<p>​    输入: [0,1,0,3,12]<br>​    输出: [1,3,12,0,0]</p>
+<p>我们会发现，1的下标从1变成0,而3和12的下标都减少了2,而他们对应减少的数字，和他们之前零的个数有关。比如：</p>
+<p>​    输入:[0,0,0,0,1]</p>
+<p>我们需要做的就是将1移动到最前面，下标由4变成0，而1前面零的个数正好是4。所以，我们只要记录下当前零的个数，在遇到非零数字的时候，我们进行交换。</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> range=<span class="number">0</span>;<span class="comment">/*用于记录要减少的下标大小*/</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)</span><br><span class="line">        &#123;</span><br><span class="line">        	<span class="keyword">if</span>(nums[i]==<span class="number">0</span>)</span><br><span class="line">        		range++;</span><br><span class="line">        	<span class="keyword">else</span></span><br><span class="line">        	&#123;</span><br><span class="line">        		<span class="keyword">int</span> temp=nums[i];</span><br><span class="line">        		nums[i]=<span class="number">0</span>;</span><br><span class="line">        		nums[i-range]=temp;<span class="comment">/*对应下标*/</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这样，算法的时间复杂度为O(n),空间复杂度为O(1);</p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>连通图(定义和连通分量)</title>
     <url>/%E8%BF%9E%E9%80%9A%E5%9B%BE-%E5%AE%9A%E4%B9%89%E5%92%8C%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F.html</url>
     <content><![CDATA[<blockquote>
@@ -71,42 +133,6 @@
       </categories>
       <tags>
         <tag>图</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>283 移动零</title>
-    <url>/283-%E7%A7%BB%E5%8A%A8%E9%9B%B6.html</url>
-    <content><![CDATA[<p>​    给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
-<p>示例:</p>
-<p>输入: [0,1,0,3,12]<br>输出: [1,3,12,0,0]<br>说明:</p>
-<p>1、必须在原数组上操作，不能拷贝额外的数组。<br>2、尽量减少操作次数。</p>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/move-zeroes" target="_blank" rel="noopener">https://leetcode-cn.com/problems/move-zeroes</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<p>解法一：这是我最开始想到的一种解法。</p>
-<p>​    现在来看输入和输出，题目要求我们是将所有的零移动到后面，将所有的不为零的数字保持相对顺序的情况下将原本0的位置覆盖。所以，我们开始的时候，先去找不为零的数字，将它放到数组的前面去。具体操作过程如下</p>
-
-
-<p>之后，我们从下标2开始去找非零数字(之前找到的下标为1，并且已经设置为零)，然后重复上述操作。</p>
-<p>代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos=<span class="number">0</span>;<span class="comment">/*pos用来标记找到的非零数字下标*/</span></span><br><span class="line">        <span class="keyword">int</span> j=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)<span class="comment">/*外层i循环是用来确定数字放置的位置*/</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(j=pos;j&lt;nums.<span class="built_in">size</span>();j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[j]!=<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                	<span class="keyword">int</span> temp=nums[j];</span><br><span class="line">					nums[j]=<span class="number">0</span>;</span><br><span class="line">                    nums[i]=temp;</span><br><span class="line">                    </span><br><span class="line">                    pos=j+<span class="number">1</span>;<span class="comment">/*将查找位置向下移动*/</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(j&gt;nums.<span class="built_in">size</span>()<span class="number">-1</span>)<span class="comment">/*如果我们查找的位置大于数组长度，说明已经结束*/</span></span><br><span class="line">            	<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>该算法在leetcode上运行结果如下：</p>
-<p>​    <img src="/image-20200418130041294.png" alt="image-20200418130041294"></p>
-<p>解法二：</p>
-<p>​    在解法一中，我们是一个位置一个位置去填充，那么我们能不能知道每个数字具体要移动的长度呢？这样我们就可以直接进行移动。观察给出的示例</p>
-<p>​    输入: [0,1,0,3,12]<br>​    输出: [1,3,12,0,0]</p>
-<p>我们会发现，1的下标从1变成0,而3和12的下标都减少了2,而他们对应减少的数字，和他们之前零的个数有关。比如：</p>
-<p>​    输入:[0,0,0,0,1]</p>
-<p>我们需要做的就是将1移动到最前面，下标由4变成0，而1前面零的个数正好是4。所以，我们只要记录下当前零的个数，在遇到非零数字的时候，我们进行交换。</p>
-<p>代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> range=<span class="number">0</span>;<span class="comment">/*用于记录要减少的下标大小*/</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)</span><br><span class="line">        &#123;</span><br><span class="line">        	<span class="keyword">if</span>(nums[i]==<span class="number">0</span>)</span><br><span class="line">        		range++;</span><br><span class="line">        	<span class="keyword">else</span></span><br><span class="line">        	&#123;</span><br><span class="line">        		<span class="keyword">int</span> temp=nums[i];</span><br><span class="line">        		nums[i]=<span class="number">0</span>;</span><br><span class="line">        		nums[i-range]=temp;<span class="comment">/*对应下标*/</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这样，算法的时间复杂度为O(n),空间复杂度为O(1);</p>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>数组</tag>
       </tags>
   </entry>
 </search>
